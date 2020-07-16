@@ -13,7 +13,7 @@ class CandidateType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
+            // ->add('roles')
             ->add('password')
             ->add('gender')
             ->add('first_name')
