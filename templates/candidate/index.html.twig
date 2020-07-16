@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidate index{% endblock %}
+
+{% block body %}
+    <h1>Candidate index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>Gender</th>
+                <th>First_name</th>
+                <th>Last_name</th>
+                <th>Address</th>
+                <th>Country</th>
+                <th>Nationality</th>
+                <th>Passport</th>
+                <th>Is_passport_valid</th>
+                <th>Profile_pic</th>
+                <th>Cv</th>
+                <th>Current_location</th>
+                <th>Birth_date</th>
+                <th>Birth_place</th>
+                <th>Is_available</th>
+                <th>Experience</th>
+                <th>Description</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>Deleted_at</th>
+                <th>Notes</th>
+                <th>Files</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidate in candidates %}
+            <tr>
+                <td>{{ candidate.id }}</td>
+                <td>{{ candidate.email }}</td>
+                <td>{{ candidate.roles ? candidate.roles|json_encode : '' }}</td>
+                <td>{{ candidate.password }}</td>
+                <td>{{ candidate.gender }}</td>
+                <td>{{ candidate.firstName }}</td>
+                <td>{{ candidate.lastName }}</td>
+                <td>{{ candidate.address }}</td>
+                <td>{{ candidate.country }}</td>
+                <td>{{ candidate.nationality }}</td>
+                <td>{{ candidate.passport }}</td>
+                <td>{{ candidate.isPassportValid ? 'Yes' : 'No' }}</td>
+                <td>{{ candidate.profilePic }}</td>
+                <td>{{ candidate.cv }}</td>
+                <td>{{ candidate.currentLocation }}</td>
+                <td>{{ candidate.birthDate ? candidate.birthDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidate.birthPlace }}</td>
+                <td>{{ candidate.isAvailable ? 'Yes' : 'No' }}</td>
+                <td>{{ candidate.experience }}</td>
+                <td>{{ candidate.description }}</td>
+                <td>{{ candidate.createdAt ? candidate.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidate.updatedAt ? candidate.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidate.deletedAt ? candidate.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidate.notes }}</td>
+                <td>{{ candidate.files }}</td>
+                <td>
+                    <a href="{{ path('candidate_show', {'id': candidate.id}) }}">show</a>
+                    <a href="{{ path('candidate_edit', {'id': candidate.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="26">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('candidate_new') }}">Create new</a>
+{% endblock %}
