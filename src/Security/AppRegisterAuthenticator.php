@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
 
 class AppRegisterAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
@@ -56,7 +58,7 @@ class AppRegisterAuthenticator extends AbstractFormLoginAuthenticator implements
             Security::LAST_USERNAME,
             $credentials['email']
         );
-
+        
         return $credentials;
     }
 
@@ -97,8 +99,8 @@ class AppRegisterAuthenticator extends AbstractFormLoginAuthenticator implements
             
             
         }
-
-         return new RedirectResponse($this->urlGenerator->generate('home_page'));
+            // dd ($token->getUser()->getId());
+         return new RedirectResponse($this->urlGenerator->generate('candidate_edit', ["id"=>$token->getUser()->getId()]));
         
         
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
