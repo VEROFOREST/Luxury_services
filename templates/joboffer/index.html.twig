@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joboffer index{% endblock %}
+
+{% block body %}
+    <h1>Joboffer index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Description</th>
+                <th>Is_activated</th>
+                <th>Notes</th>
+                <th>Job_title</th>
+                <th>Job_type</th>
+                <th>Location</th>
+                <th>Closing_date</th>
+                <th>Salary</th>
+                <th>Created_at</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for joboffer in joboffers %}
+            <tr>
+                <td>{{ joboffer.id }}</td>
+                <td>{{ joboffer.reference }}</td>
+                <td>{{ joboffer.description }}</td>
+                <td>{{ joboffer.isActivated ? 'Yes' : 'No' }}</td>
+                <td>{{ joboffer.notes }}</td>
+                <td>{{ joboffer.jobTitle }}</td>
+                <td>{{ joboffer.jobType }}</td>
+                <td>{{ joboffer.location }}</td>
+                <td>{{ joboffer.closingDate ? joboffer.closingDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ joboffer.salary }}</td>
+                <td>{{ joboffer.createdAt ? joboffer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('joboffer_show', {'id': joboffer.id}) }}">show</a>
+                    <a href="{{ path('joboffer_edit', {'id': joboffer.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('joboffer_new') }}">Create new</a>
+{% endblock %}
