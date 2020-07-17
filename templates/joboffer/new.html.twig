@@ -3,9 +3,11 @@
 {% block title %}New Joboffer{% endblock %}
 
 {% block body %}
+    <div class="container">
     <h1>Create new Joboffer</h1>
 
     {{ include('joboffer/_form.html.twig') }}
 
     <a href="{{ path('joboffer_index') }}">back to list</a>
+    </div>
 {% endblock %}

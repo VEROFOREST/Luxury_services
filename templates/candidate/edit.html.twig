@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Edit Candidate{% endblock %}
+{% block stylesheets %}
+<style>
+        select {
+            display: block!important;
+        }
+</style>
+{% endblock %}
 
 {% block body %}
     <div class="base">
@@ -105,3 +112,11 @@
 
 </div>
 {% endblock %}
+{# {% block javascripts %}
+<script type="text/javascript">
+
+    onAppReady(function() {
+        $('.preload').remove();
+    });
+</script>
+{% endblock %} #}

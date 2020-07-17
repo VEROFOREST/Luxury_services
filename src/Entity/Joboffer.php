@@ -71,13 +71,13 @@ class Joboffer
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="joboffers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=Sector::class, inversedBy="joboffers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $sector;
 

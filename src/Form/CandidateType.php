@@ -3,10 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Candidate;
+use App\Entity\Sector;
+use Doctrine\DBAL\Types\BooleanType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class CandidateType extends AbstractType
 {
@@ -16,7 +20,13 @@ class CandidateType extends AbstractType
             ->add('email')
             // ->add('roles')
             ->add('password')
-            ->add('gender')
+            ->add('gender',ChoiceType::class,[
+                'choices'=>[
+                    'F'=> 'Féminin',
+                    'M'=> 'Masculin',
+                ],
+
+            ])
             ->add('first_name')
             ->add('last_name')
             ->add('address')
@@ -37,8 +47,11 @@ class CandidateType extends AbstractType
             ->add('deleted_at')
             ->add('notes')
             ->add('files')
-            ->add('sector')
-        ;
+            ->add('sector', EntityType::class, array(
+                    'class' => Sector::class,
+                    'choice_label' => 'name',
+                    'multiple'  => false,
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
