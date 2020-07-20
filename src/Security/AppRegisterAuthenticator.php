@@ -99,7 +99,9 @@ class AppRegisterAuthenticator extends AbstractFormLoginAuthenticator implements
             
             
         }
+           
             // dd ($token->getUser()->getId());
+              
          return new RedirectResponse($this->urlGenerator->generate('candidate_edit', ["id"=>$token->getUser()->getId()]));
         
         

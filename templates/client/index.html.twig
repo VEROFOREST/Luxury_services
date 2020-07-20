@@ -3,12 +3,26 @@
 {% block title %}Client index{% endblock %}
 
 {% block body %}
-    <h1>Client index</h1>
+    <section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="white-text">Clients Repository</h2>
+                        <span class="white-text">Personnal & Professionnal informations</span>
+                        <ol class="breadcrumb">
+                            <li><a href="#!">Home</a></li>
+                            <li class="active">Admin</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Company_name</th>
                 <th>Activity</th>
                 <th>Contact_name</th>
@@ -21,7 +35,7 @@
         <tbody>
         {% for client in clients %}
             <tr>
-                <td>{{ client.id }}</td>
+                
                 <td>{{ client.companyName }}</td>
                 <td>{{ client.activity }}</td>
                 <td>{{ client.contactName }}</td>
