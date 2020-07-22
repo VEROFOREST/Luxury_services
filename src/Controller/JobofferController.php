@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Joboffer;
+use App\Entity\Sector;
 use App\Form\JobofferType;
 use App\Repository\JobofferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +21,10 @@ class JobofferController extends AbstractController
      */
     public function index(JobofferRepository $jobofferRepository): Response
     {
-        return $this->render('joboffer/index.html.twig', [
+        // dd($jobofferRepository->findAll());
+        return $this->render('joboffer/viewoffers.html.twig', [
             'joboffers' => $jobofferRepository->findAll(),
+           
         ]);
     }
 
@@ -52,7 +55,7 @@ class JobofferController extends AbstractController
      * @Route("/{id}", name="joboffer_show", methods={"GET"})
      */
     public function show(Joboffer $joboffer): Response
-    {
+    {  
         return $this->render('joboffer/show.html.twig', [
             'joboffer' => $joboffer,
         ]);
@@ -67,14 +70,17 @@ class JobofferController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+            //  dd($joboffer);
+            $this->getDoctrine()->getManager()->flush();
+            
             return $this->redirectToRoute('joboffer_index');
         }
-
+            //  dd($joboffer);
         return $this->render('joboffer/edit.html.twig', [
             'joboffer' => $joboffer,
             'form' => $form->createView(),
+            
         ]);
     }
 

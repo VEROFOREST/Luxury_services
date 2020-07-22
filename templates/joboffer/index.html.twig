@@ -2,8 +2,41 @@
 
 {% block title %}Joboffer index{% endblock %}
 
+{% block stylesheets %}
+<style>
+        select {
+            display: block!important;
+        }
+</style>
+{% endblock %}
+
+  
+
 {% block body %}
-    <h1>Joboffer index</h1>
+    <section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="white-text">Job offers List!</h2>
+                        <span class="white-text">Personnal & Professionnal informations</span>
+                        <ol class="breadcrumb">
+                            <li><a href="{{path('admin_dashboard')}}">Home</a></li>
+                            <li class="active">Profile</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    <!-- Page Content-->
+        
+        <section class="section-padding">
+                <div class="container">
+                    <div class="row">
+                        <h3 class="text-extrabold">Your personal informations</h3>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+    
 
     <table class="table">
         <thead>
@@ -50,4 +83,8 @@
     </table>
 
     <a href="{{ path('joboffer_new') }}">Create new</a>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

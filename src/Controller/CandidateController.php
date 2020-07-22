@@ -66,21 +66,28 @@ class CandidateController extends AbstractController
      */
     public function edit(Request $request, Candidate $candidate): Response
     {
-        $form = $this->createForm(CandidateType::class, $candidate);
-        $form->handleRequest($request);
+        if($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+            return $this->redirectToRoute('admin_dashboard');
+        }
+        else
+        {
+            $form = $this->createForm(CandidateType::class, $candidate);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('candidate_index');
+                return $this->redirectToRoute('candidate_index');
+            }
+           ;
+            return $this->render('candidate/edit.html.twig', [
+                'candidate' => $candidate,
+                'form' => $form->createView(),
+
+            ]);
         }
 
-        return $this->render('candidate/edit.html.twig', [
-            'candidate' => $candidate,
-            'form' => $form->createView(),
-        ]);
     }
-
     /**
      * @Route("/{id}", name="candidate_delete", methods={"DELETE"})
      */
