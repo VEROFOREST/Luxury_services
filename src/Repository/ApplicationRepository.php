@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Application;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\AST\WhereClause;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,4 +48,24 @@ class ApplicationRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function getAllApplications(){
+         $entityManager = $this->getEntityManager();
+       
+        $query = $entityManager->createQuery(
+            'SELECT
+                application
+             FROM
+                App\Entity\Application application
+             JOIN
+               application.joboffer joboffer
+             JOIN
+                application.candidate candidate'
+            
+               
+
+        );
+
+        // dd($query->getResult());
+        return $query->getResult();
+    }
 }

@@ -2,14 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Application;
 use App\Entity\Joboffer;
 use App\Entity\Sector;
 use App\Form\JobofferType;
+use App\Repository\ApplicationRepository;
 use App\Repository\JobofferRepository;
+use PhpParser\Node\Expr\New_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 /**
  * @Route("/joboffer")
@@ -19,12 +24,14 @@ class JobofferController extends AbstractController
     /**
      * @Route("/", name="joboffer_index", methods={"GET"})
      */
-    public function index(JobofferRepository $jobofferRepository): Response
+    public function index(JobofferRepository $jobofferRepository, ApplicationRepository $applicationRepository): Response
     {
-        // dd($jobofferRepository->findAll());
+        
        
         return $this->render('joboffer/viewoffers.html.twig', [
             'joboffers' =>  $jobofferRepository->getAllJoboffers(),
+            'applications'=>$applicationRepository->getAllApplications(),
+            
            
         ]);
     }
@@ -57,9 +64,35 @@ class JobofferController extends AbstractController
      */
     public function show(Joboffer $joboffer): Response
     {  
+       
         return $this->render('joboffer/offerDetails.html.twig', [
             'joboffer' => $joboffer,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/apply", name="apply", methods={"GET","POST"})
+     */
+
+
+    public function apply(Joboffer $joboffer, UserInterface $user): Response
+    {  
+            
+            $application = new Application;
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $application->setCandidate($user);
+            $application->setJoboffer($joboffer);
+           
+            $entityManager->persist($application);
+            $entityManager->flush();
+        
+        return $this->render('joboffer/offerDetails.html.twig', [
+            'joboffer' => $joboffer,
+            'application'=>$application,
+        ]);
+
+
     }
 
     /**
@@ -72,12 +105,12 @@ class JobofferController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            //  dd($joboffer);
+            
             $this->getDoctrine()->getManager()->flush();
             
             return $this->redirectToRoute('joboffer_index');
         }
-            //  dd($joboffer);
+            
         return $this->render('joboffer/edit.html.twig', [
             'joboffer' => $joboffer,
             'form' => $form->createView(),

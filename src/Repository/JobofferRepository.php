@@ -51,7 +51,7 @@ class JobofferRepository extends ServiceEntityRepository
 
     public function getAllJoboffers(){
          $entityManager = $this->getEntityManager();
-
+       
         $query = $entityManager->createQuery(
             'SELECT
                 joboffer,
@@ -70,9 +70,8 @@ class JobofferRepository extends ServiceEntityRepository
 
         // dd($query->getResult());
         return $query->getResult();
-
-
-
-
     }
+    
+
+
 }
