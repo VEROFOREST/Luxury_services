@@ -70,7 +70,7 @@
                 <td>{{ joboffer.salary }}</td>
                 <td>{{ joboffer.createdAt ? joboffer.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('joboffer_show', {'id': joboffer.id}) }}">show</a>
+                    <a href="{{ path('admin_joboffer_show', {'id': joboffer.id}) }}">show</a>
                     <a href="{{ path('joboffer_edit', {'id': joboffer.id}) }}">edit</a>
                 </td>
             </tr>

@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Candidate;
+use App\Entity\Joboffer;
 use App\Form\CandidateType;
 use App\Repository\JobofferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 
 
@@ -37,6 +39,15 @@ class AdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}", name="joboffer_show", methods={"GET"})
+     */
+    public function show(Joboffer $joboffer): Response
+    {  
+        return $this->render('joboffer/show.html.twig', [
+            'joboffer' => $joboffer,
+        ]);
+    }
     /**
      * @Route("/{id}/edit", name="candidate_edit", methods={"GET","POST"})
      */

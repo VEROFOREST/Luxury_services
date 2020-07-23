@@ -64,4 +64,24 @@ class CandidateRepository extends ServiceEntityRepository implements PasswordUpg
         ;
     }
     */
+    // public function getProgress(){
+    //      $entityManager = $this->getEntityManager();
+
+    //     $query = $entityManager->createQuery(
+    //         'SELECT
+    //             candidate,
+    //         COUNT (*)
+            
+                
+    //          FROM
+    //             App\Entity\Joboffer joboffer
+    //          JOIN
+    //            joboffer.sector sector
+    //          JOIN
+    //             joboffer.client client'
+
+
+
+
+    // }
 }

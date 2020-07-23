@@ -22,8 +22,9 @@ class JobofferController extends AbstractController
     public function index(JobofferRepository $jobofferRepository): Response
     {
         // dd($jobofferRepository->findAll());
+       
         return $this->render('joboffer/viewoffers.html.twig', [
-            'joboffers' => $jobofferRepository->findAll(),
+            'joboffers' =>  $jobofferRepository->getAllJoboffers(),
            
         ]);
     }
@@ -56,7 +57,7 @@ class JobofferController extends AbstractController
      */
     public function show(Joboffer $joboffer): Response
     {  
-        return $this->render('joboffer/show.html.twig', [
+        return $this->render('joboffer/offerDetails.html.twig', [
             'joboffer' => $joboffer,
         ]);
     }

@@ -66,6 +66,7 @@ class CandidateController extends AbstractController
      */
     public function edit(Request $request, Candidate $candidate): Response
     {
+
         if($this->container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
             return $this->redirectToRoute('admin_dashboard');
         }
@@ -73,7 +74,7 @@ class CandidateController extends AbstractController
         {
             $form = $this->createForm(CandidateType::class, $candidate);
             $form->handleRequest($request);
-
+           
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->getDoctrine()->getManager()->flush();
 
