@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Candidate;
 
 
 /**
@@ -24,15 +25,21 @@ class JobofferController extends AbstractController
     /**
      * @Route("/", name="joboffer_index", methods={"GET"})
      */
-    public function index(JobofferRepository $jobofferRepository, ApplicationRepository $applicationRepository): Response
-    {
-        
-       
+    public function index(JobofferRepository $jobofferRepository, ApplicationRepository $applicationRepository, UserInterface $user): Response
+    { 
+        $candidateApplications = $applicationRepository->findBy(['candidate'=> $user->getId()]);
+        $candidateJobofferIds =[];
+        foreach ($candidateApplications as $candidateApplication) 
+        {
+           $candidateJobofferIds[$candidateApplication->getJoboffer()->getId()]=true;
+        // dd($candidateJobofferIds);
+       }
+        // dd($candidateJobofferIds);
         return $this->render('joboffer/viewoffers.html.twig', [
             'joboffers' =>  $jobofferRepository->getAllJoboffers(),
             'applications'=>$applicationRepository->getAllApplications(),
-            
-           
+            'candidateJobofferIds'=>$candidateJobofferIds
+      
         ]);
     }
 

@@ -10,7 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class CandidateType extends AbstractType
 {
@@ -32,7 +32,8 @@ class CandidateType extends AbstractType
             ->add('address')
             ->add('country')
             ->add('nationality')
-            ->add('passport')
+            ->add('passportFile',VichFileType::class)
+            // ->add('passport')
             ->add('is_passport_valid')
             ->add('profile_pic')
             ->add('cv')

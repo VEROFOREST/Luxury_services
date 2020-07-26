@@ -82,18 +82,16 @@
                                             <p class="truncate-text">{{ joboffer.description }}</p>
                                         </div>
                                         <div class="card-action">
-
-                                                                                              
-                                            
-                                        
-                                        
-                                            
-                                          
-                                        
-                                            <a class="btn btn-md primary border waves-effect waves-dark" href="{{path('joboffer_show',{'id': joboffer.id})}}">Details</a>
-                                        
-                                            <a class="btn btn-md primary waves-effect waves-light" href="{{path('apply',{'id': joboffer.id})}}">Apply</a>
+                                        {% if candidateJobofferIds[joboffer.id] is defined %}
                                        
+                                            <a class="btn btn-md primary border waves-effect waves-dark" href="{{path('joboffer_show',{'id': joboffer.id})}}">Details</a>
+                                        {% else %}
+                                            <a class="btn btn-md primary border waves-effect waves-dark" href="{{path('joboffer_show',{'id': joboffer.id})}}">Details</a>
+                                            
+                                            <a class="btn btn-md primary waves-effect waves-light" href="{{path('apply',{'id': joboffer.id})}}">Apply</a>
+                                        
+                                        {% endif %}
+                                        
                                         </div>
                                     </div>
                                 </div>

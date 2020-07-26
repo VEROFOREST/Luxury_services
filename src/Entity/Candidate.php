@@ -5,18 +5,29 @@ namespace App\Entity;
 use App\Repository\CandidateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraint as Assert;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
+
+
+
 
 
 /**
+ 
  * @ORM\Entity(repositoryClass=CandidateRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @Vich\Uploadable
+ * 
  */
-class Candidate implements UserInterface
+class Candidate implements UserInterface 
 {
     /**
      * @ORM\Id()
@@ -76,15 +87,31 @@ class Candidate implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nationality;
+    /**
+     * NOTE: This is not a mapped field of entity metadata, just a simple property.
+     * 
+     * @Vich\UploadableField(mapping="passport", fileNameProperty="passport")
+     * 
+     * @var File|null
+     */
+    private $passportFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $passport;
+    /**
+     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     */
+    private $updatedAt;
+
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
+
+    
     private $is_passport_valid;
 
     /**
@@ -133,10 +160,10 @@ class Candidate implements UserInterface
     private $created_at;
 
    
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $updated_at;
+    // /**
+    //  * @ORM\Column(type="datetime", nullable=true)
+    //  */
+    // private $updated_at;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -339,6 +366,30 @@ public function getConfirmPassword(): string
 
         return $this;
     }
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $passportFile
+     */
+    public function setPassportFile(?File $passportFile = null): void
+    {
+        $this->passportFile = $passportFile;
+
+        if (null !== $passportFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getPassportFile(): ?File
+    {
+        return $this->passportFile;
+    }
 
     public function getPassport(): ?string
     {
@@ -478,12 +529,12 @@ public function getConfirmPassword(): string
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -577,5 +628,26 @@ public function getConfirmPassword(): string
         $this->is_admin = $is_admin;
 
         return $this;
+    }
+    /* 
+    * @see \Serializable::serialize()
+    */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->image,
+        ));
+    }
+
+    /*
+    * @see \Serializable::unserialize() 
+    */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->image,
+        ) = unserialize($serialized, array('allowed_classes' => false));
     }
 }
